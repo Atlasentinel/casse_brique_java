@@ -41,6 +41,24 @@ public class Balle extends Sprite{
         y += vitesseY;
     }
 
+    public void collider(Barre barre) {
+        if (y + diametre >= barre.y && x >= barre.x && x <= barre.x + barre.largeur) {
+            vitesseY = -vitesseY; // Inverser la direction de la balle si collision avec la barre
+        }
+    }
+
+    // Dans la classe Balle
+    public boolean intersects(Brique brique) {
+        java.awt.Rectangle balleBounds = new java.awt.Rectangle(x, y, diametre, diametre);
+        java.awt.Rectangle briqueBounds = new java.awt.Rectangle(brique.x, brique.y, brique.largeur, brique.hauteur);
+        return balleBounds.intersects(briqueBounds);
+    }
+
+    public void inverserDirectionY() {
+        vitesseY = -vitesseY;
+    }
+
+
     public void dessiner(Graphics2D dessin) {
         dessin.setColor(couleur);
         dessin.fillOval(x,y,diametre,diametre);

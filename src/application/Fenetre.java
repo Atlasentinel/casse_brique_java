@@ -2,6 +2,7 @@ package application;
 
 import models.Balle;
 import models.Barre;
+import models.Brique;
 import models.Sprite;
 
 import javax.swing.*;
@@ -16,6 +17,8 @@ public class Fenetre extends Canvas implements KeyListener {
     public static final int HAUTEUR = 700;
 
     protected boolean toucheEspace = false;
+    protected boolean toucheGauche = false;
+    protected boolean toucheDroite = false;
 
     ArrayList<Balle> listeBalles = new ArrayList<>();
     ArrayList<Sprite> listeSprites = new ArrayList<>();
@@ -44,8 +47,6 @@ public class Fenetre extends Canvas implements KeyListener {
         fenetre.setVisible(true);
         this.createBufferStrategy(2);
 
-
-
         this.demarrer();
     }
 
@@ -59,6 +60,23 @@ public class Fenetre extends Canvas implements KeyListener {
         listeBalles.add(balle);
         listeSprites.add(balle);
 
+        // Générer les briques
+        int espaceBrique = 10;
+        int briqueWidth = 70;
+        int briqueHeight = 20;
+        int nombreColonnes = 6;
+        int nombreRangées = 5;
+
+        for (int row = 0; row < nombreRangées; row++) {
+            for (int col = 0; col < nombreColonnes; col++) {
+                int x = col * (briqueWidth + espaceBrique);
+                int y = row * (briqueHeight + espaceBrique);
+                Color couleur = Color.BLUE; // Couleur de la brique
+                Brique brique = new Brique(x, y, briqueWidth, briqueHeight, couleur);
+                listeSprites.add(brique);
+            }
+        }
+
         while(true) {
 
             Graphics2D dessin = (Graphics2D) this.getBufferStrategy().getDrawGraphics();
@@ -66,8 +84,26 @@ public class Fenetre extends Canvas implements KeyListener {
             dessin.fillRect(0,0,LARGEUR,HAUTEUR);
 
             //----- app -----
+
             for(Balle b : listeBalles) {
+
+                for (int i = 0; i < listeSprites.size(); i++) {
+                    Sprite sprite = listeSprites.get(i);
+                    if (sprite instanceof Brique) {
+                        Brique brique = (Brique) sprite;
+                        if (balle.intersects(brique)) {
+                            // Gérer la collision ici, par exemple, en supprimant la brique
+                            listeSprites.remove(i);
+                            // Inverser la direction de la balle après la collision avec la brique
+                            balle.inverserDirectionY();
+                            // Sortir de la boucle pour éviter de gérer la collision avec plusieurs briques en même temps
+                            break;
+                        }
+                    }
+                }
+
                 b.deplacement();
+                b.collider(barre);
             }
 
             for(Sprite s : listeSprites) {
@@ -78,6 +114,17 @@ public class Fenetre extends Canvas implements KeyListener {
             if(toucheEspace) {
                 listeBalles.add( new Balle(200, 400 , Color.BLUE, 50));
             }
+
+            if(toucheDroite)
+            {
+                barre.moveRight();
+            }
+
+            if(toucheGauche)
+            {
+                barre.moveLeft();
+            }
+
             //---------------
 
             dessin.dispose();
@@ -97,12 +144,30 @@ public class Fenetre extends Canvas implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_SPACE) {
             toucheEspace = true;
         }
+
+        if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+            toucheGauche = true;
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            toucheDroite = true;
+        }
+
     }
+
 
     @Override
     public void  keyReleased(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_SPACE) {
             toucheEspace = false;
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+            toucheGauche = false;
+        }
+
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            toucheDroite = false;
         }
     }
 }

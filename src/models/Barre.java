@@ -1,28 +1,27 @@
 package models;
 
 import application.Fenetre;
-
 import java.awt.*;
 
-public class Barre extends Sprite{
-
-    protected int largeur;
-    protected int hauteur;
+public class Barre extends Rectangle {
 
     public Barre(int x, int y, int largeur, int hauteur, Color couleur) {
-        super(x, y, couleur);
-        this.largeur = largeur;
-        this.hauteur = hauteur;
+        super(x, y, largeur, hauteur, couleur);
     }
 
     public Barre() {
-        super(Fenetre.LARGEUR / 2 - 75, Fenetre.HAUTEUR - 100, Color.BLUE);
-        this.largeur = 150;
-        this.hauteur = 20;
+        super(Fenetre.LARGEUR / 2 - 75, Fenetre.HAUTEUR - 100, 150, 20, Color.BLUE);
     }
 
-    public void dessiner(Graphics2D dessin) {
-        dessin.setColor(couleur);
-        dessin.fillRect(x,y,largeur,hauteur);
+    public void moveLeft() {
+        if (x > 0) {
+            x -= 10; // Déplacer de 10 pixels vers la gauche
+        }
+    }
+
+    public void moveRight() {
+        if (x + largeur < Fenetre.LARGEUR) {
+            x += 10; // Déplacer de 10 pixels vers la droite
+        }
     }
 }
