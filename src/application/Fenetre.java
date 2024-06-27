@@ -19,6 +19,7 @@ public class Fenetre extends Canvas implements KeyListener {
     protected boolean toucheEspace = false;
     protected boolean toucheGauche = false;
     protected boolean toucheDroite = false;
+    protected int vitesseRectangle = 10;
 
     ArrayList<Balle> listeBalles = new ArrayList<>();
     ArrayList<Sprite> listeSprites = new ArrayList<>();
@@ -55,7 +56,7 @@ public class Fenetre extends Canvas implements KeyListener {
         barre = new Barre();
         listeSprites.add(barre);
 
-        Balle balle = new Balle(100, 200 , Color.GREEN, 30);
+        Balle balle = new Balle(100, 200 , Color.WHITE, 30);
 
         listeBalles.add(balle);
         listeSprites.add(balle);
@@ -65,13 +66,13 @@ public class Fenetre extends Canvas implements KeyListener {
         int briqueWidth = 70;
         int briqueHeight = 20;
         int nombreColonnes = 6;
-        int nombreRangées = 5;
+        int nombreRangees = 5;
 
-        for (int row = 0; row < nombreRangées; row++) {
+        for (int row = 0; row < nombreRangees; row++) {
             for (int col = 0; col < nombreColonnes; col++) {
                 int x = col * (briqueWidth + espaceBrique);
                 int y = row * (briqueHeight + espaceBrique);
-                Color couleur = Color.BLUE; // Couleur de la brique
+                Color couleur = Color.RED; // Couleur de la brique
                 Brique brique = new Brique(x, y, briqueWidth, briqueHeight, couleur);
                 listeSprites.add(brique);
             }
@@ -80,7 +81,7 @@ public class Fenetre extends Canvas implements KeyListener {
         while(true) {
 
             Graphics2D dessin = (Graphics2D) this.getBufferStrategy().getDrawGraphics();
-            dessin.setColor(Color.WHITE);
+            dessin.setColor(Color.BLACK);
             dessin.fillRect(0,0,LARGEUR,HAUTEUR);
 
             //----- app -----
@@ -115,14 +116,16 @@ public class Fenetre extends Canvas implements KeyListener {
                 listeBalles.add( new Balle(200, 400 , Color.BLUE, 50));
             }
 
+            //Déplacement à droite de la barre
             if(toucheDroite)
             {
-                barre.moveRight();
+                barre.moveRight(vitesseRectangle);
             }
 
+            //Déplacement à gauche de la barre
             if(toucheGauche)
             {
-                barre.moveLeft();
+                barre.moveLeft(vitesseRectangle);
             }
 
             //---------------
