@@ -42,9 +42,10 @@ public class Balle extends Sprite{
         y += vitesseY;
     }
 
+    // Inverse la direction de la balle si collision avec la barre
     public void collider(Barre barre) {
         if (y + diametre >= barre.y && x >= barre.x && x <= barre.x + barre.largeur) {
-            vitesseY = -vitesseY; // Inverser la direction de la balle si collision avec la barre
+            vitesseY = -vitesseY;
         }
     }
 

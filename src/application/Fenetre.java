@@ -93,9 +93,9 @@ public class Fenetre extends Canvas implements KeyListener {
                     if (sprite instanceof Brique) {
                         Brique brique = (Brique) sprite;
                         if (balle.intersects(brique)) {
-                            // Gérer la collision ici, par exemple, en supprimant la brique
+                            // Gére la collision ici, en supprimant la brique
                             listeSprites.remove(i);
-                            // Inverser la direction de la balle après la collision avec la brique
+                            // Inverse la direction de la balle après la collision avec la brique
                             balle.inverserDirectionY();
                             // Sortir de la boucle pour éviter de gérer la collision avec plusieurs briques en même temps
                             break;
