@@ -15,13 +15,13 @@ public class Barre extends Rectangle {
 
     public void moveLeft(int _speed) {
         if (x > 0) {
-            x -= _speed; // Déplacer de 10 pixels vers la gauche
+            x -= _speed; // Déplacer de N pixels vers la gauche
         }
     }
 
     public void moveRight(int _speed) {
         if (x + largeur < Fenetre.LARGEUR) {
-            x += _speed; // Déplacer de 10 pixels vers la droite
+            x += _speed; // Déplacer de N pixels vers la droite
         }
     }
 }

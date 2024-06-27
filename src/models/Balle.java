@@ -3,6 +3,7 @@ package models;
 import application.Fenetre;
 
 import java.awt.*;
+import java.awt.Rectangle;
 
 public class Balle extends Sprite{
 
@@ -47,10 +48,10 @@ public class Balle extends Sprite{
         }
     }
 
-    // Dans la classe Balle
+    //Gère les collision entre le rectangle et la balle
     public boolean intersects(Brique brique) {
-        java.awt.Rectangle balleBounds = new java.awt.Rectangle(x, y, diametre, diametre);
-        java.awt.Rectangle briqueBounds = new java.awt.Rectangle(brique.x, brique.y, brique.largeur, brique.hauteur);
+        Rectangle balleBounds = new Rectangle(x, y, diametre, diametre);
+        Rectangle briqueBounds = new Rectangle(brique.x, brique.y, brique.largeur, brique.hauteur);
         return balleBounds.intersects(briqueBounds);
     }
 
